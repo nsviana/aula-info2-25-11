@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>JavaScript: Introdução ao back-end com Node.js</title>
+<style>
+:root{--bg:#f4f7f6;--paper:#fff;--ink:#17272b;--mut:#617177;--line:#dfe6e7;--teal:#0f766e;--soft:#e9f5f3;--code:#0b1720;--codeInk:#e7f0f2;--gold:#a16207}
+*{box-sizing:border-box}html,body{margin:0;font-family:Inter,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}body{overflow:hidden}
+.slide{position:absolute;inset:0;display:none;overflow:auto;padding:5vh 7vw 82px;background:radial-gradient(circle at 94% 5%,#e8f5f2,transparent 25%),linear-gradient(#fff,#f8faf9)}.slide.on{display:flex;flex-direction:column}.hero{justify-content:center}
+.top{display:flex;justify-content:space-between;gap:20px}.eyebrow{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);font-weight:800}.num{font-size:13px;font-weight:800;color:#9aa6aa}h1,h2{font-family:Georgia,serif;line-height:1.06;margin:.15em 0}h1{font-size:clamp(44px,7vw,82px);max-width:1050px}h2{font-size:clamp(32px,4.5vw,58px)}h3{margin:4px 0 10px}p{font-size:clamp(16px,1.5vw,21px);line-height:1.5;color:#34474d}.lead{font-size:clamp(20px,2vw,28px);max-width:1050px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:20px}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 7px 22px #17333a0d}.card p,.card li{font-size:16px;line-height:1.45}.card li{margin:7px 0}pre{margin:0;background:var(--code);color:var(--codeInk);border-radius:13px;padding:17px;overflow:auto;font:14px/1.5 Consolas,"Courier New",monospace;white-space:pre-wrap}.callout{margin-top:18px;border-left:5px solid var(--teal);background:var(--soft);padding:15px 18px;border-radius:0 12px 12px 0;font-size:16px;line-height:1.5}.callout.gold{border-color:var(--gold);background:#fff8e9}.chips{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.chips span{background:#fff;border:1px solid var(--line);padding:9px 13px;border-radius:999px;font-weight:700}.bar{position:fixed;bottom:0;left:0;height:5px;background:var(--teal)}.controls{position:fixed;z-index:10;right:18px;bottom:14px;background:#ffffffed;border:1px solid var(--line);border-radius:99px;padding:7px;box-shadow:0 10px 30px #17333a20}.controls button{border:0;background:#edf3f2;width:38px;height:38px;border-radius:50%;font-size:17px;cursor:pointer}.controls span{display:inline-block;width:66px;text-align:center;font-size:12px;font-weight:800;color:#65757a}.exercise{border-top:4px solid var(--teal)}.exercise b{color:var(--teal)}
+@media(max-width:850px){body{overflow:auto}.slide{position:relative;min-height:100vh}.grid,.grid.three{grid-template-columns:1fr}.controls{right:10px;bottom:10px}pre{white-space:pre}}
+@media print{body{overflow:visible}.controls{display:none}.slide{display:flex!important;position:relative;min-height:100vh;page-break-after:always}}
+
+.card p,.card li,.callout{font-size:clamp(16px,1.35vw,20px)} pre{font-size:clamp(13px,1.05vw,17px)} .card a{color:var(--teal)}
+</style>
+<style>pre{font-size:clamp(14px,1.25vw,19px);line-height:1.38;overflow-wrap:anywhere}.card p,.card li{font-size:clamp(16px,1.35vw,20px)}.diagram{display:flex;align-items:center;justify-content:center;gap:24px;margin:40px 0}.diagram>div:not(.arrows){border:2px solid var(--teal);background:white;border-radius:16px;padding:30px;text-align:center;flex:1;max-width:320px;font-size:25px}.arrows{color:var(--teal);font-size:22px;line-height:2;text-align:center}.browser{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:white;margin-top:15px}.address{background:#e9eeee;padding:12px;color:#34474d;font:16px Consolas,monospace}.page{padding:22px;color:#111;font:18px Georgia,serif;min-height:100px}.page li{font:17px Georgia,serif!important}@media(max-width:850px){.diagram{flex-direction:column}.arrows{font-size:16px}}</style></head>
+<body>
+<section class="slide on hero"><div class="eyebrow">Programação para Web · IFPI · 2026/02 · Prof. Nairon</div><h1>Introdução ao back-end com JavaScript</h1><p class="lead">Do JavaScript no navegador à criação do primeiro servidor web com Node.js.</p><div class="chips"><span>Node.js</span><span>Terminal</span><span>npm</span><span>prompt-sync</span><span>HTTP</span></div><p>Professor Nairon Saraiva Viana</p></section><section class="slide"><div class="top"><div><div class="eyebrow">00 · Preparação do ambiente</div><h2>Ferramentas para a aula</h2></div><div class="num">02</div></div><p class="lead">Antes de executar JavaScript no terminal, prepare o ambiente de desenvolvimento.</p><div class="grid three"><div class="card"><h3>Node.js</h3><p>Ambiente de execução do JavaScript.</p><p><a href="https://nodejs.org/" rel="noopener" target="_blank">nodejs.org</a></p></div><div class="card"><h3>Editor de código</h3><p>Visual Studio Code ou outro editor de texto disponível no laboratório.</p><p><a href="https://code.visualstudio.com/" rel="noopener" target="_blank">code.visualstudio.com</a></p></div><div class="card"><h3>Terminal</h3><p>Prompt de Comando (CMD) do Windows ou terminal integrado do editor.</p></div></div><div class="callout">Abra o Prompt de Comando para verificar se o Node.js já está instalado.</div></section><section class="slide"><div class="top"><div><div class="eyebrow">00 · Preparação do ambiente</div><h2>Verificar Node.js e npm</h2></div><div class="num">03</div></div><div class="grid"><div class="card"><h3>Comandos</h3><pre>node -v
+npm -v</pre><h3>Exemplo de saída</h3><pre>v24.11.0
+11.6.1</pre><p>Os números de versão podem variar.</p></div><div class="card"><h3>Se os comandos não forem reconhecidos</h3><ol><li>Acesse <a href="https://nodejs.org/">nodejs.org</a>.</li><li>Baixe o instalador LTS para Windows.</li><li>Execute o instalador, mantendo o npm e a inclusão no PATH.</li><li>Feche e reabra o terminal e repita os comandos.</li></ol></div></div><div class="callout gold">Em computadores do laboratório, solicite autorização caso a instalação exija privilégios administrativos. Se o PowerShell bloquear npm.ps1, utilize o Prompt de Comando (CMD).</div></section><section class="slide"><div class="top"><div><div class="eyebrow">00 · Preparação do ambiente</div><h2>Criar a pasta de trabalho</h2></div><div class="num">04</div></div><div class="grid"><div class="card"><h3>No Prompt de Comando</h3><pre>mkdir aula-nodejs
+cd aula-nodejs
+mkdir exemplo-prompt
+dir</pre><p>Execute os comandos em um diretório no qual você tenha permissão de escrita.</p></div><div class="card"><h3>No editor</h3><p>Abra a pasta <code>aula-nodejs</code> pelo menu Arquivo → Abrir Pasta.</p><p>Crie o arquivo <code>principal.js</code> na raiz do projeto.</p><pre>aula-nodejs/
+├── principal.js
+└── exemplo-prompt/</pre></div></div><div class="callout">Confirme que o terminal está na pasta da aula antes de executar os exemplos. Os arquivos JavaScript devem ter a extensão .js, não .js.txt.</div></section><section class="slide"><div class="top"><div><div class="eyebrow">00 · Preparação do ambiente</div><h2>Testar o ambiente</h2></div><div class="num">05</div></div><div class="grid"><div class="card"><h3>Teste rápido no terminal</h3><pre>node -e "console.log('Node.js funcionando!')"</pre><h3>Saída esperada</h3><pre>Node.js funcionando!</pre></div><div class="card"><h3>Checklist</h3><ul><li>Node.js instalado e reconhecido.</li><li>npm instalado e reconhecido.</li><li>Editor aberto na pasta da aula.</li><li>Terminal posicionado na raiz.</li><li>Teste de execução concluído.</li></ul></div></div><div class="callout">O Node.js está pronto para executar os arquivos JavaScript da aula.</div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">01 · Motivação</div><h2>Onde o JavaScript pode executar?</h2></div><div class="num">06</div></div><div class="grid"><div class="card"><h3>Até agora</h3><p>HTML e CSS estruturam e estilizam a página. JavaScript reage a eventos e manipula o DOM.</p><pre>document.getElementById("resultado").textContent = "Olá!";</pre></div><div class="card"><h3>A partir de agora</h3><p>JavaScript também pode executar fora do navegador, processar informações e responder a solicitações de outros programas.</p><pre>console.log("Olá!");</pre></div></div><div class="callout">A linguagem continua a mesma. O ambiente de execução muda.</div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">01 · Motivação</div><h2>Por que precisamos de um back-end?</h2></div><div class="num">07</div></div><div class="grid"><div class="card"><h3>Imagine um sistema escolar</h3><ul><li>Onde ficam os dados cadastrados?</li><li>Como dois computadores consultam os mesmos alunos?</li><li>Quem verifica as regras de aprovação?</li></ul></div><div class="card"><h3>Separação de responsabilidades</h3><p><b>Front-end:</b> interface e interação com o usuário.</p><p><b>Back-end:</b> processamento, validação e acesso a dados no servidor.</p></div></div><div class="callout">O servidor centraliza o processamento e pode atender solicitações de diferentes clientes.</div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">01 · Conceito</div><h2>Cliente e servidor</h2></div><div class="num">08</div></div><div class="diagram"><div><b>Navegador</b><p>Cliente<br/>HTML · CSS · JS</p></div><div class="arrows">Requisição →<br/>← Resposta</div><div><b>Servidor</b><p>Node.js<br/>Processamento</p></div></div><div class="callout">O cliente solicita um recurso. O servidor recebe a solicitação, processa e envia uma resposta. Ambos podem estar no mesmo computador.</div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">01 · Ambiente</div><h2>Conhecendo o Node.js</h2></div><div class="num">09</div></div><div class="grid"><div class="card"><h3>O que é?</h3><p>Um ambiente de execução de JavaScript fora do navegador. Não é uma nova linguagem nem um servidor por si só.</p><p>Não precisamos de HTML para executar nossos primeiros programas.</p></div><div class="card"><h3>Executando um arquivo</h3><pre>node principal.js</pre><p>O comando <code>node</code> recebe o caminho do arquivo JavaScript e executa suas instruções.</p></div></div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">01 · Primeiro programa</div><h2>JavaScript fora do navegador</h2></div><div class="num">10</div></div><div class="grid"><div class="card"><h3>principal.js</h3><pre>const nome = "Maria";
+const idade = 17;
+
+console.log("Nome: " + nome);
+console.log("Idade: " + idade);
+
+if (idade &gt;= 18) {
+    console.log("Maior de idade");
+} else {
+    console.log("Menor de idade");
+}</pre></div><div class="card"><h3>Execução no terminal</h3><pre>node principal.js
+Nome: Maria
+Idade: 17
+Menor de idade</pre><p>A decisão é executada pelo Node.js. O resultado aparece no terminal, sem DOM e sem navegador.</p></div></div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">01 · Revisão</div><h2>Arrays, funções e decisões</h2></div><div class="num">11</div></div><div class="grid"><div class="card"><h3>nomealunos.js</h3><pre>const alunos = [
+    { nome: "Maria", nota: 8.5 },
+    { nome: "Pedro", nota: 5.0 },
+    { nome: "Ana", nota: 9.0 },
+    { nome: "João", nota: 6.0 }
+];
+
+function verificarSituacao(nota) {
+    if (nota &gt;= 7) {
+        return "Aprovado";
+    }
+
+    return "Reprovado";
+}
+
+for (let i = 0; i &lt; alunos.length; i++) {
+    const aluno = alunos[i];
+
+    console.log(
+        aluno.nome + " - " +
+        aluno.nota + " - " +
+        verificarSituacao(aluno.nota)
+    );
+}</pre></div><div class="card"><h3>Execução no terminal</h3><pre>node nomealunos.js
+Maria - 8.5 - Aprovado
+Pedro - 5 - Reprovado
+Ana - 9 - Aprovado
+João - 6 - Reprovado</pre><p>O programa percorre o array e aplica uma regra para cada aluno. A regra não depende de uma interface gráfica.</p></div></div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">02 · Entrada de dados</div><h2>Como receber informações?</h2></div><div class="num">12</div></div><div class="grid"><div class="card"><h3>No navegador</h3><pre>const nome = prompt("Digite seu nome:");</pre><p>O navegador fornece uma janela de entrada.</p></div><div class="card"><h3>No terminal</h3><p>O Node.js não oferece o mesmo <code>window.prompt()</code>. Vamos usar a biblioteca <code>prompt-sync</code> para ler valores digitados no terminal.</p></div></div><div class="callout">O programa aguarda a digitação e continua após pressionar Enter.</div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">02 · npm</div><h2>Instalando uma biblioteca</h2></div><div class="num">13</div></div><div class="grid"><div class="card"><h3>Na pasta raiz da aula</h3><pre>npm init -y
+npm install prompt-sync
+npm list prompt-sync</pre><p>Execute a inicialização apenas se ainda não houver um package.json.</p><p>O último comando deve listar <code>prompt-sync</code> e sua versão instalada.</p></div><div class="card"><h3>O que foi criado?</h3><ul><li><b>npm:</b> gerenciador de pacotes.</li><li><b>package.json:</b> informações e dependências.</li><li><b>package-lock.json:</b> registro das versões resolvidas.</li><li><b>node_modules:</b> bibliotecas instaladas.</li></ul></div></div><div class="callout">A instalação é feita uma vez na raiz. Os exemplos da subpasta encontram a biblioteca na pasta superior.</div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">02 · Organização</div><h2>Estrutura da aula</h2></div><div class="num">14</div></div><div class="grid"><div class="card"><h3>Arquivos e pastas</h3><pre>aula-nodejs/
+├── principal.js
+├── nomealunos.js
+├── servidor.js
+├── exemplo-prompt/
+│   ├── principal.js
+│   ├── avaliacao.js
+│   ├── alunos.js
+│   └── sistema.js
+├── node_modules/
+├── package.json
+└── package-lock.json</pre></div><div class="card"><h3>Como executar</h3><p>Permaneça na raiz e informe o caminho do arquivo.</p><pre>node principal.js
+node exemplo-prompt/principal.js</pre><p>Os dois arquivos têm o mesmo nome, mas estão em pastas diferentes.</p></div></div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">02 · Exemplo 1</div><h2>Receber um nome</h2></div><div class="num">15</div></div><div class="grid"><div class="card"><h3>exemplo-prompt/principal.js</h3><pre>const prompt = require("prompt-sync")();
+
+const nome = prompt("Digite seu nome: ");
+
+console.log("Olá, " + nome + "!");</pre></div><div class="card"><h3>Execução no terminal</h3><pre>node exemplo-prompt/principal.js
+Digite seu nome: Maria
+Olá, Maria!</pre><p>require carrega a biblioteca; a chamada final () prepara a função prompt. O valor digitado é uma string.</p></div></div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">02 · Exemplo 2</div><h2>Receber notas e calcular a média</h2></div><div class="num">16</div></div><div class="grid"><div class="card"><h3>exemplo-prompt/avaliacao.js</h3><pre>const prompt = require("prompt-sync")();
+const nome = prompt("Nome do aluno: ");
+const nota1 = Number(prompt("Primeira nota: "));
+const nota2 = Number(prompt("Segunda nota: "));
+const media = (nota1 + nota2) / 2;
+
+console.log("Aluno: " + nome);
+console.log("Média: " + media);
+if (media &gt;= 7) {
+    console.log("Aprovado");
+} else {
+    console.log("Reprovado");
+}</pre></div><div class="card"><h3>Execução no terminal</h3><pre>node exemplo-prompt/avaliacao.js
+Nome do aluno: Maria
+Primeira nota: 8
+Segunda nota: 9
+Aluno: Maria
+Média: 8.5
+Aprovado</pre><p>Number converte o texto em número. Neste exemplo, considere entradas válidas e use ponto para notas decimais.</p></div></div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">02 · Exemplo 3</div><h2>Preencher um array pelo terminal</h2></div><div class="num">17</div></div><div class="grid"><div class="card"><h3>exemplo-prompt/alunos.js</h3><pre>const prompt = require("prompt-sync")();
+const alunos = [];
+
+for (let i = 0; i &lt; 3; i++) {
+    const nome = prompt("Nome do aluno: ");
+    alunos.push(nome);
+}
+
+console.log("Alunos cadastrados:");
+for (let i = 0; i &lt; alunos.length; i++) {
+    console.log(alunos[i]);
+}</pre></div><div class="card"><h3>Execução no terminal</h3><pre>node exemplo-prompt/alunos.js
+Nome do aluno: Maria
+Nome do aluno: Pedro
+Nome do aluno: Ana
+Alunos cadastrados:
+Maria
+Pedro
+Ana</pre><p>push adiciona cada nome ao array. O segundo for percorre os nomes cadastrados.</p></div></div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">02 · Exemplo 4</div><h2>Um sistema com menu interativo</h2></div><div class="num">18</div></div><div class="grid"><div class="card"><h3>A ideia</h3><p>Manter um programa em execução enquanto o usuário escolhe operações.</p><pre>=== SISTEMA ESCOLAR ===
+1 - Cadastrar aluno
+2 - Listar alunos
+3 - Sair
+Escolha uma opção:</pre></div><div class="card"><h3>Conhecimentos reaproveitados</h3><ul><li>while para repetir o menu.</li><li>if / else if para escolher uma operação.</li><li>push para cadastrar.</li><li>for para listar.</li></ul></div></div><div class="callout">Os dados ficam na memória durante a execução. Ao encerrar o programa, o array é perdido.</div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">02 · Exemplo 4</div><h2>Implementação do menu</h2></div><div class="num">19</div></div><div class="grid"><div class="card"><h3>sistema.js · início</h3><pre>const prompt = require("prompt-sync")();
+const alunos = [];
+let opcao = 0;
+
+while (opcao !== 3) {
+    console.log("\n=== SISTEMA ESCOLAR ===");
+    console.log("1 - Cadastrar aluno");
+    console.log("2 - Listar alunos");
+    console.log("3 - Sair");
+    opcao = Number(prompt("Escolha uma opção: "));</pre></div><div class="card"><h3>sistema.js · continuação</h3><pre>if (opcao === 1) {
+        const nome = prompt("Nome do aluno: ");
+        alunos.push(nome);
+        console.log("Aluno cadastrado!");
+    } else if (opcao === 2) {
+        for (let i = 0; i &lt; alunos.length; i++) {
+            console.log(alunos[i]);
+        }
+    } else if (opcao === 3) {
+        console.log("Encerrando...");
+    } else {
+        console.log("Opção inválida!");
+    }
+}</pre></div></div><div class="callout">Os dois blocos fazem parte do mesmo arquivo. Execute: <code>node exemplo-prompt/sistema.js</code>.</div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">02 · Pratique</div><h2>Exercícios no terminal</h2></div><div class="num">20</div></div><div class="grid"><div class="card"><h3>1. Calculadora</h3><p>Receba dois números e mostre a soma, a diferença e o produto.</p></div><div class="card"><h3>2. Média da turma</h3><p>Receba cinco notas, armazene em um array e calcule a média.</p></div><div class="card"><h3>3. Contagem de aprovados</h3><p>Conte quantas das notas digitadas são maiores ou iguais a 7.</p></div><div class="card"><h3>4. Menu de produtos</h3><p>Adapte o menu para cadastrar e listar nomes de produtos.</p></div></div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">03 · Transição</div><h2>Do terminal ao servidor</h2></div><div class="num">21</div></div><div class="grid"><div class="card"><h3>Programa interativo</h3><p>O usuário digita dados diretamente no terminal.</p><p>O programa processa e usa <code>console.log()</code> para apresentar resultados.</p></div><div class="card"><h3>Servidor web</h3><p>O navegador envia uma requisição pela rede.</p><p>O servidor processa e envia uma resposta HTTP.</p></div></div><div class="callout">A diferença principal é a forma de comunicação. O servidor permanece aguardando novas requisições.</div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">03 · Primeiro servidor</div><h2>Criando um servidor HTTP</h2></div><div class="num">22</div></div><div class="grid"><div class="card"><h3>servidor.js</h3><pre>const http = require("node:http");
+
+const servidor = http.createServer(
+    function (requisicao, resposta) {
+        resposta.end("Meu primeiro servidor!");
+    }
+);
+
+servidor.listen(3000);</pre></div><div class="card"><h3>Execução no terminal</h3><pre>node servidor.js</pre><p>O texto entre colchetes é ilustrativo: o código não imprime mensagem no terminal. Abra http://localhost:3000 no navegador.</p></div></div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">03 · HTTP</div><h2>Entendendo o código</h2></div><div class="num">23</div></div><div class="grid"><div class="card"><h3>Criar o servidor</h3><ul><li><code>require("node:http")</code>: carrega o módulo HTTP nativo.</li><li><code>createServer()</code>: cria o servidor e recebe uma função chamada a cada requisição.</li><li><code>requisicao</code>: informações do pedido.</li><li><code>resposta</code>: objeto usado para responder.</li></ul></div><div class="card"><h3>Enviar e aguardar</h3><ul><li><code>resposta.end()</code>: envia o conteúdo e finaliza a resposta.</li><li><code>listen(3000)</code>: inicia a escuta na porta 3000.</li><li><code>localhost</code>: endereço do próprio computador.</li></ul></div></div><div class="callout">O módulo node:http já acompanha o Node.js. Não é necessário instalá-lo com npm.</div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">03 · Demonstração</div><h2>Acessando o servidor</h2></div><div class="num">24</div></div><div class="browser"><div class="address">↻   http://localhost:3000</div><div class="page">Meu primeiro servidor!</div></div><div class="grid"><div class="card"><h3>Experimente</h3><p>Atualize a página. O servidor responde novamente.</p></div><div class="card"><h3>Encerre o processo</h3><p>Pressione <code>Ctrl + C</code> no terminal e atualize a página. A conexão deixa de funcionar.</p></div></div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">03 · Evolução</div><h2>Enviando HTML na resposta</h2></div><div class="num">25</div></div><div class="grid"><div class="card"><h3>servidor-html.js</h3><pre>const http = require("node:http");
+
+const servidor = http.createServer(
+    function (requisicao, resposta) {
+        resposta.setHeader("Content-Type", "text/html; charset=utf-8");
+
+        resposta.end(`
+            &lt;h1&gt;Meu primeiro servidor!&lt;/h1&gt;
+            &lt;p&gt;Esta página foi enviada pelo Node.js.&lt;/p&gt;
+            &lt;hr&gt;
+            &lt;h2&gt;Disciplinas&lt;/h2&gt;
+            &lt;ul&gt;
+                &lt;li&gt;Programação Web&lt;/li&gt;
+                &lt;li&gt;Banco de Dados&lt;/li&gt;
+                &lt;li&gt;Redes de Computadores&lt;/li&gt;
+            &lt;/ul&gt;
+        `);
+    }
+);
+
+servidor.listen(3000);</pre></div><div class="card"><h3>Resultado no navegador</h3><div class="browser"><div class="address">↻   localhost:3000</div><div class="page"><strong style="font-size:25px">Meu primeiro servidor!</strong><p style="font:16px Georgia">Esta página foi enviada pelo Node.js.</p><hr/><strong style="font-size:20px">Disciplinas</strong><ul><li>Programação Web</li><li>Banco de Dados</li><li>Redes de Computadores</li></ul></div></div><p>O navegador interpreta as tags e renderiza a página.</p></div></div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">03 · Evolução</div><h2>O que mudou?</h2></div><div class="num">26</div></div><div class="grid"><div class="card"><h3>Tipo de conteúdo</h3><pre>resposta.setHeader("Content-Type", "text/html; charset=utf-8");</pre><p>Informa ao navegador que a resposta contém HTML codificado em UTF-8.</p></div><div class="card"><h3>Texto em várias linhas</h3><pre>resposta.end(`
+    &lt;h1&gt;Olá!&lt;/h1&gt;
+    &lt;p&gt;Minha página.&lt;/p&gt;
+`);</pre><p>As crases permitem escrever uma string em várias linhas. O Node.js envia o texto; o navegador interpreta o HTML.</p></div></div><div class="callout">Encerre o servidor anterior com Ctrl + C antes de executar <code>node servidor-html.js</code>, pois ambos usam a porta 3000.</div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">03 · Pratique</div><h2>Sua primeira página servida pelo Node.js</h2></div><div class="num">27</div></div><div class="grid"><div class="card"><h3>Atividade</h3><p>Crie um arquivo servidor-html.js que envie uma página de apresentação de um curso técnico.</p><ul><li>Um título com h1.</li><li>Uma descrição com p.</li><li>Uma lista de pelo menos três disciplinas.</li></ul></div><div class="card"><h3>Teste</h3><p>Execute o arquivo e acesse localhost:3000.</p><p>Altere o conteúdo, encerre e reinicie o servidor. Atualize a página para conferir.</p></div></div><div class="callout">O conteúdo HTML é enviado diretamente pela resposta HTTP.</div></section>
+<section class="slide"><div class="top"><div><div class="eyebrow">Encerramento</div><h2>O que aprendemos hoje?</h2></div><div class="num">28</div></div><div class="grid"><div class="card"><h3>JavaScript no Node.js</h3><p>Executar arquivos, receber dados pelo terminal, reaproveitar arrays, decisões e repetições.</p></div><div class="card"><h3>Primeiro servidor</h3><p>Receber requisições e enviar respostas de texto ou HTML ao navegador.</p></div></div><div class="callout">Próximo passo: compreender como um servidor pode disponibilizar outros recursos de uma aplicação web.</div></section><div class="controls"><button aria-label="Anterior" id="prev">←</button><span id="count"></span><button aria-label="Próximo" id="next">→</button></div>
+<script>
+const slides = [...document.querySelectorAll(".slide")];
+let current = 0;
+function show(index) {
+  current = Math.max(0, Math.min(slides.length - 1, index));
+  slides.forEach((slide, i) => slide.classList.toggle("on", i === current));
+  document.querySelector("#count").textContent = `${current + 1} / ${slides.length}`;
+  document.querySelectorAll(".slide .bar").forEach(bar => bar.remove());
+  slides[current].scrollTop = 0;
+  window.scrollTo(0, 0);
+}
+document.querySelector("#prev").addEventListener("click", () => show(current - 1));
+document.querySelector("#next").addEventListener("click", () => show(current + 1));
+document.addEventListener("keydown", event => {
+  if (["ArrowRight", "PageDown", " "].includes(event.key)) { event.preventDefault(); show(current + 1); }
+  if (["ArrowLeft", "PageUp"].includes(event.key)) { event.preventDefault(); show(current - 1); }
+  if (event.key === "Home") show(0);
+  if (event.key === "End") show(slides.length - 1);
+});
+show(0);
+</script>
+</body>
+</html>
